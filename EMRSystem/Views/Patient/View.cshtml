@@ -1,0 +1,90 @@
+﻿@model EMRSystem.ViewModels.PatientActionViewModel
+@{
+    ViewBag.Title = "View";
+}
+
+<div class="row">
+    <div class="card col-md-12">
+        <div class="card-body">
+            <h2 class="card-title">
+                View Patient Info
+            </h2>
+            <section id="registerform">
+                <form id="ActionForm">
+                    <div class="row">
+
+                        <div class="form-group col-md-4">
+                            <label>Full Name</label>
+                            <input class="form-control" disabled value="@Model.Name" name="Name" placeholder="Enter Full Name.">
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label>Email</label>
+                            <input type="email" name="Email"  value="@Model.Email" disabled class="form-control" placeholder="Enter Email" />
+
+                        </div>
+
+
+
+
+                        <div class="form-group col-md-4">
+                            <label>CNIC</label>
+                            <input class="form-control" disabled value="@Model.CNIC" id="CNIC" name="CNIC" placeholder="Enter CNIC.">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label>Gender</label>
+                            <select class="form-control" disabled name="Gender">
+                                @if (Model.Gender == "Male")
+                                {
+                                    <option selected value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Not Prefer to Say">Not Prefer to Say</option>
+                                }
+                                else if (Model.Gender == "Female")
+                                {
+                                    <option value="Male">Male</option>
+                                    <option selected value="Female">Female</option>
+                                    <option value="Not Prefer to Say">Not Prefer to Say</option>
+                                }
+                                else if (Model.Gender == "Not Prefer to Say")
+                                {
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option selected value="Not Prefer to Say">Not Prefer to Say</option>
+                                }
+                                else
+                                {
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Not Prefer to Say">Not Prefer to Say</option>
+                                }
+
+                            </select>
+                        </div>
+
+
+                        <div class="form-group col-md-4">
+                            <label>Date of Birth</label>
+                            @Html.TextBox("DOB", Model.DOB, "{0:yyyy-MM-dd}", new { @style = "width:100%;pointer-events:none;", @id = "DOB", @class = "form-control", type = "date" })
+                        </div>
+
+
+
+                        <div class="form-group col-md-4">
+                            <label>Contact</label>
+                            <input class="form-control" value="@Model.Contact" disabled name="Contact" placeholder="Enter Contact.">
+                        </div>
+
+                    </div>
+                    
+
+                   
+                </form>
+            </section>
+
+            <a class="btn btn-outline-dark" href="@Url.Action("Dashboard","Hospital")">BACK TO DASHBOARD</a>
+        </div>
+    </div>
+</div>

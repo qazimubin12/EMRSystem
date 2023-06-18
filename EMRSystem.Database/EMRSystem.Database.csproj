@@ -57,13 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\202305110953355_initialized.cs" />
-    <Compile Include="Migrations\202305110953355_initialized.designer.cs">
-      <DependentUpon>202305110953355_initialized.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202306161008120_changess.cs" />
-    <Compile Include="Migrations\202306161008120_changess.designer.cs">
-      <DependentUpon>202306161008120_changess.cs</DependentUpon>
+    <Compile Include="Migrations\202306181838162_dbchanges.cs" />
+    <Compile Include="Migrations\202306181838162_dbchanges.designer.cs">
+      <DependentUpon>202306181838162_dbchanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,11 +76,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202305110953355_initialized.resx">
-      <DependentUpon>202305110953355_initialized.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202306161008120_changess.resx">
-      <DependentUpon>202306161008120_changess.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202306181838162_dbchanges.resx">
+      <DependentUpon>202306181838162_dbchanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

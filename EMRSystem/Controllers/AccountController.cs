@@ -179,35 +179,22 @@ namespace EMRSystem.Controllers
             return View(model);
         }
 
-        public IEnumerable<User> SearchUsers(string CNIC)
+     
+        static int CalculateAge(DateTime birthDate)
         {
-            var users = UserManager.Users.AsQueryable();
+            DateTime currentDate = DateTime.Now;
+            int age = currentDate.Year - birthDate.Year;
 
-            if (!string.IsNullOrEmpty(CNIC))
+            // Check if the birthday has already occurred this year
+            if (birthDate.Date > currentDate.Date)
             {
-                users = users.Where(a => a.CNIC.Contains(CNIC.ToLower()));
+                age--;
             }
-            return users;
+
+            return age;
         }
-
-        [HttpPost]
-        public JsonResult CheckCNIC(string CNIC)
-        {
-            var users = SearchUsers(CNIC);
-            if (users.Count() > 0) {
-                bool isCNICExists = true;
-                return Json(new { isCNICExists = isCNICExists },JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                bool isCNICExists = false;
-                return Json(new { isCNICExists = isCNICExists }, JsonRequestBehavior.AllowGet);
-
-
-            }
-        }
-
         //
+
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
@@ -231,7 +218,8 @@ namespace EMRSystem.Controllers
                 }
                 else if (role.Name == "Patient")
                 {
-                    var user = new User { UserName = model.Email, Email = model.Email, CNIC = model.CNIC, DOB = model.DOB, Gender = model.Gender, PhoneNumber = model.Contact, Name = model.Name, Role = role.Name, Password = model.Password };
+                    
+                    var user = new User {Age=CalculateAge(model.DOB), UserName = model.Email, Email = model.Email, CNIC = model.CNIC, DOB = model.DOB, Gender = model.Gender, PhoneNumber = model.Contact, Name = model.Name, Role = role.Name, Password = model.Password };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {

@@ -8,7 +8,7 @@ namespace EMRSystem.Entities
 {
     public class HospitalRecord:BaseEntity
     {
-        public int HopistalID { get; set; }
+        public string HopistalID { get; set; }
         public string Disease { get; set; }
         public string Doctor { get; set; }
     }

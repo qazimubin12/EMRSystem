@@ -3,10 +3,35 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initialized : DbMigration
+    public partial class dbchanges : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.HospitalRecords",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        HopistalID = c.String(),
+                        Disease = c.String(),
+                        Doctor = c.String(),
+                    })
+                .PrimaryKey(t => t.ID);
+            
+            CreateTable(
+                "dbo.Invoices",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Hospital = c.String(),
+                        Patient = c.String(),
+                        Doctor = c.String(),
+                        SuggestMedicine = c.String(),
+                        Attachment = c.String(),
+                        Remarks = c.String(),
+                    })
+                .PrimaryKey(t => t.ID);
+            
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new
@@ -38,6 +63,13 @@
                         Name = c.String(),
                         Password = c.String(),
                         Role = c.String(),
+                        CNIC = c.String(),
+                        DOB = c.DateTime(nullable: false),
+                        Gender = c.String(),
+                        City = c.String(),
+                        RegisteredNo = c.String(),
+                        Image = c.String(),
+                        Age = c.Int(nullable: false),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -97,6 +129,8 @@
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Invoices");
+            DropTable("dbo.HospitalRecords");
         }
     }
 }

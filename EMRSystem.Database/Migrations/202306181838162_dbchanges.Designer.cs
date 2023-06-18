@@ -7,13 +7,13 @@ namespace EMRSystem.Database.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class initialized : IMigrationMetadata
+    public sealed partial class dbchanges : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(initialized));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(dbchanges));
         
         string IMigrationMetadata.Id
         {
-            get { return "202305110953355_initialized"; }
+            get { return "202306181838162_dbchanges"; }
         }
         
         string IMigrationMetadata.Source

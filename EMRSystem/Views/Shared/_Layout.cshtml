@@ -45,15 +45,31 @@
 
                     @if (User.IsInRole("Admin") == true)
                     {
-                <a class="navbar-brand brand-logo" href="@Url.Action("Dashboard", "Admin")" style="color:white;">
-                    <img src="~/Content/template/images/logo.png" />
-                </a>
-                                <a class="navbar-brand brand-logo-mini" href="@Url.Action("Dashboard", "Admin")" style="color:white;">
-                                    <img src="~/Content/template/images/logo.png" />
-                                </a> }
+                        <a class="navbar-brand brand-logo" href="@Url.Action("Dashboard", "Admin")" style="color:white;">
+                            EMR System
+                        </a>
+                        <a class="navbar-brand brand-logo-mini" href="@Url.Action("Dashboard", "Admin")" style="color:white;">
+                            EMR System
+                        </a> }
+                    else if (User.IsInRole("Hospital") == true)
+                    {
+                        <a class="navbar-brand brand-logo" href="@Url.Action("Dashboard", "Hospital")" style="color:white;">
+                            EMR System
+                        </a>
+                        <a class="navbar-brand brand-logo-mini" href="@Url.Action("Dashboard", "Hospital")" style="color:white;">
+                            EMR System
+                        </a>}
+                    else if (User.IsInRole("Patient") == true)
+                    {
+                        <a class="navbar-brand brand-logo" href="@Url.Action("Dashboard", "Patient")" style="color:white;">
+                            EMR System
+                        </a>
+                        <a class="navbar-brand brand-logo-mini" href="@Url.Action("Dashboard", "Patient")" style="color:white;">
+                            EMR System
+                        </a>}
 
 
-                          
+
 
                     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                         <span class="typcn typcn-th-menu"></span>

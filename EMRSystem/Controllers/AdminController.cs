@@ -59,6 +59,35 @@ namespace EMRSystem.Controllers
         }
 
 
+        public IEnumerable<User> SearchUsersbycnic(string CNIC)
+        {
+            var users = UserManager.Users.AsQueryable();
+
+            if (!string.IsNullOrEmpty(CNIC))
+            {
+                users = users.Where(a => a.CNIC == CNIC);
+            }
+            return users;
+        }
+
+
+        [HttpPost]
+        public JsonResult CheckCNIC(string CNIC)
+        {
+            var users = SearchUsersbycnic(CNIC);
+            if (users.Count() > 0)
+            {
+                bool isCNICExists = true;
+                return Json(new { isCNICExists = isCNICExists }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                bool isCNICExists = false;
+                return Json(new { isCNICExists = isCNICExists }, JsonRequestBehavior.AllowGet);
+
+
+            }
+        }
         public ActionResult Dashboard()
         {
             AdminViewModel model = new AdminViewModel();

@@ -1,0 +1,78 @@
+﻿@model EMRSystem.ViewModels.HospitalRecordActionViewModel
+
+@if (Model != null)
+{
+    <div class="card">
+        <div class="card-body">
+            @if (Model.ID != 0)
+            {
+                <h2 class="card-title">
+                    Edit Hospital Record
+                </h2>
+
+            }
+            else
+            {
+                <h2 class="card-title">
+                    Create Hospital Record
+                </h2>
+
+            }
+
+            <form id="actionForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>
+                            Doctor Name
+                        </label>
+                        <input type="text" class="form-control" name="Doctor" value="@Model.Doctor" id="Doctor" placeholder="Enter Doctor" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>
+                            Disease Name
+                        </label>
+                        <input type="text" class="form-control" name="Disease" value="@Model.Disease" id="Value" placeholder="Enter Disease" />
+                    </div>
+
+                </div>
+            </form>
+
+
+
+            <div class="errorDiv">
+
+            </div>
+        </div>
+        <div style="background-color:white;" class="card-footer">
+            @if (Model.ID != 0)
+            {
+                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Update</button>
+            }
+            else
+            {
+                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+            }
+            <a href="@Url.Action("Index"," ")" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</a>
+        </div>
+    </div>
+}
+
+<script>
+
+	$("#actionButton").click(function () {
+		$.ajax({
+			url: '@Url.Action("Action", "HospitalRecord")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+            .done(function (response) {
+			if(response.success)
+			{
+				window.location.href = "@Url.Action("Index", "HospitalRecord")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+	});
+</script>
