@@ -1,0 +1,147 @@
+﻿@model EMRSystem.ViewModels.AdminViewModel
+@{ ViewBag.Title = "Dashboard";
+                string blogtitle = ""; }
+
+<style>
+    .scroll {
+        overflow-x: scroll;
+        width: contain;
+    }
+
+    td {
+        width: 200px;
+    }
+</style>
+<h2>Dashboard - Welcome @Model.SignedInUser.Name</h2>
+<hr />
+
+<div class="row">
+    <div class="col-4">
+        <div class="card col-12">
+            <div class="card-body">
+                <h2 class="card-title">
+                    No of Patients
+                </h2>
+                <h1 class="text-center">
+                    @Model.Patients
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card col-12">
+            <div class="card-body">
+                <h2 class="card-title">
+                    No of Hospitals
+                </h2>
+                <h1 class="text-center">
+                    @Model.Hospitals
+                </h1>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-4">
+        <div class="card col-12">
+            <div class="card-body">
+                <h2 class="card-title">
+                    No of Admins
+                </h2>
+                <h1 class="text-center">
+                    @Model.Admins
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+
+<div class="row mb-3">
+    <div class="col col-lg-12">
+        <form method="post">
+            <div class="input-group">
+                <select class="form-control" name="Parameter" id="Paramter">
+                    @foreach (var item in Model.Roles)
+                    {
+                        if (Model.Paramter == item.Name)
+                        {
+        <option selected value="@item.Name">@item.Name</option> }
+                        else
+                        {
+        <option value="@item.Name">@item.Name</option>}
+                    }
+                </select>
+                <input type="text" name="searchterm" class="form-control" placeholder="Search." value="@Model.SearchTerm">
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search mr-1"></i> Search</button>
+                    <a class="btn btn-outline-secondary" href="@Url.Action("Dashboard", "Admin")"><i class="fas fa-redo-alt mr-1"></i> Reset</a>
+                </div>
+            </div>
+        </form>
+        <br />
+        @if (Model.Users != null)
+        {
+<div class="card">
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Contact
+                    </th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Users)
+                {
+<tr>
+    <td>@item.Name</td>
+    <td>@item.Email</td>
+    <td>@item.PhoneNumber</td>
+
+</tr>}
+            </tbody>
+        </table>
+    </div>
+</div> }
+            else
+            {
+
+<div class="alert alert-warning col-md-12" role="alert">
+    Sorry! No records exist.
+</div>            }
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    </div>
+</div>
+
+<script>
+    $(".data-btn").click(function () {
+        $.ajax({
+            url: $(this).attr("data-href"),
+        })
+            .done(function (response) {
+                $("#actionModal .modal-dialog").html(response);
+            });
+    });
+
+</script>
