@@ -71,7 +71,7 @@
     <td>@item.PhoneNumber</td>
     <td>@item.CNIC</td>
     <td><a class="btn btn-primary" href="@Url.Action("View", "Patient", new { ID=item.Id})">VIEW</a></td>
-    <td><a class="btn btn-primary" href="@Url.Action("Invoice", "Patient", new { ID = item.Id })">GENERATE INVOICE</a></td>
+    <td><a class="btn btn-primary" href="@Url.Action("GenerateInvoice", "Patient", new { ID = item.Id })">GENERATE INVOICE</a></td>
 </tr>}
             </tbody>
         </table>

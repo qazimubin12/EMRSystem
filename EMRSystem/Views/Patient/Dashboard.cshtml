@@ -45,6 +45,7 @@
                                 <th>
                                     Remarks
                                 </th>
+                                <th>Attachment</th>
                                 <th>
                                     Action
                                 </th>
@@ -61,7 +62,8 @@
                                     <td>@item.Doctor</td>
                                     <td>@item.SuggestMedicine</td>
                                     <td>@item.Remarks</td>
-                                    <td><embed src="@item.Attachment" /></td>
+                                    <td><embed class="embed-responsive" src="@item.Attachment" /></td>
+                                    <td><a href="@Url.Action("ViewInvoiceNew", "Patient", new {ID=item.ID })" class="btn btn-dark">VIEW INVOICE</a></td>
                                 </tr>
 }
                         </tbody>

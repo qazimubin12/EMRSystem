@@ -36,6 +36,17 @@
         .body {
             background-color: #F69601;
         }
+
+        .form-control{
+            border:solid 1px black;
+            color:black;
+        }
+        select.form-control, .select2-container--default select.select2-selection--single, .select2-container--default .select2-selection--single select.select2-search__field, select.typeahead, select.tt-query, select.tt-hint {
+            padding: 0.4375rem 0.75rem;
+            border: solid 1px black;
+            outline: 1px solid #f3f3f3;
+            color: black;
+        }
     </style>
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
@@ -79,7 +90,7 @@
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
                 <ul class="navbar-nav mr-lg-2">
                     <li class="nav-item nav-profile dropdown">
-                        <a class="nav-link" href="#" data-toggle="dropdown" id="profileDropdown">
+                        <a class="nav-link" href="#" data-bs-toggle="dropdown" id="profileDropdown">
 
                             @if (User.IsInRole("Hospital"))
                             {
@@ -178,13 +189,38 @@
                     else if (User.IsInRole("Hospital"))
                     {
                         <li class="nav-item">
+
+                            <a class="nav-link" href="@Url.Action("Dashboard", "Hospital")">
+                                <i class="typcn typcn-device-desktop menu-icon"></i>
+                                <span class="menu-title">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Index", "HospitalRecord")">
                                 <i class="mdi mdi-account-settings menu-icon"></i>
                                 <span class="menu-title">Hospital Records</span>
                             </a>
                         </li>
 
+                        <li class="nav-item">
+
+                            <a class="nav-link" href="@Url.Action("UserProfile", "Account")">
+                                <i class="typcn typcn-device-desktop menu-icon"></i>
+                                <span class="menu-title">Settings</span>
+                            </a>
+                        </li>
                     }
+                    else if (User.IsInRole("Patient"))
+                    {
+                        <li class="nav-item">
+
+                            <a class="nav-link" href="@Url.Action("UserProfile", "Account")">
+                                <i class="typcn typcn-device-desktop menu-icon"></i>
+                                <span class="menu-title">Settings</span>
+                            </a>
+                        </li>
+                    }
+
 
 
 

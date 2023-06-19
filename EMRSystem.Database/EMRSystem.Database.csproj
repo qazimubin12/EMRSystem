@@ -61,6 +61,18 @@
     <Compile Include="Migrations\202306181838162_dbchanges.designer.cs">
       <DependentUpon>202306181838162_dbchanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202306191303554_changesofdb.cs" />
+    <Compile Include="Migrations\202306191303554_changesofdb.designer.cs">
+      <DependentUpon>202306191303554_changesofdb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202306191313229_invoicedisesae.cs" />
+    <Compile Include="Migrations\202306191313229_invoicedisesae.designer.cs">
+      <DependentUpon>202306191313229_invoicedisesae.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202306191649269_invoicedateadded.cs" />
+    <Compile Include="Migrations\202306191649269_invoicedateadded.designer.cs">
+      <DependentUpon>202306191649269_invoicedateadded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DSContext.cs" />
@@ -78,6 +90,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202306181838162_dbchanges.resx">
       <DependentUpon>202306181838162_dbchanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306191303554_changesofdb.resx">
+      <DependentUpon>202306191303554_changesofdb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306191313229_invoicedisesae.resx">
+      <DependentUpon>202306191313229_invoicedisesae.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202306191649269_invoicedateadded.resx">
+      <DependentUpon>202306191649269_invoicedateadded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -316,6 +316,16 @@ namespace EMRSystem.Controllers
             model.ID = user.Id;
             model.UserName = user.UserName;
             model.Name = user.Name;
+            model.Name = user.Name;
+            model.UserName = user.UserName;
+            model.Email = user.Email;
+            model.City = user.City;
+            model.DOB = user.DOB;
+            model.Age = CalculateAge(model.DOB);
+            model.CNIC = user.CNIC;
+            model.Gender = user.Gender;
+            model.Image = user.Image;
+            model.RegisteredNo = user.RegisteredNo;
             return View(model);
         }
 
@@ -337,6 +347,14 @@ namespace EMRSystem.Controllers
             user.PhoneNumber = model.Contact;
             user.UserName = model.UserName;
             user.Email = model.Email;
+            user.City = model.City;
+            user.DOB = model.DOB;
+            user.Age = CalculateAge(model.DOB);
+            user.CNIC = model.CNIC;
+            user.Gender = model.Gender;
+            user.Image = model.Image;
+            user.RegisteredNo = model.RegisteredNo; 
+           
             await UserManager.UpdateAsync(user);
 
             return View(model);

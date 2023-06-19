@@ -1260,9 +1260,12 @@
     <Content Include="Views\HospitalRecord\_Listing.cshtml" />
     <Content Include="Views\Patient\Dashboard.cshtml" />
     <Content Include="Views\Patient\GenerateInvoice.cshtml" />
+    <Content Include="Views\Patient\Invoice.cshtml" />
+    <Content Include="Views\Patient\ViewInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Attachments\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

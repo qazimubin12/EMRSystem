@@ -24,6 +24,13 @@ namespace EMRSystem.ViewModels
         public string Contact { get; set; }
         public string SearchTerm { get; set; }
         public string Paramter { get; set; }
+        public string CNIC { get; set; }
+        public DateTime DOB { get; set; }
+        public string Gender { get; set; }
+        public string City { get; set; }
+        public string RegisteredNo { get; set; }
+        public string Image { get; set; }
+        public int Age { get; set; }
     }
 
 

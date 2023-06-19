@@ -34,7 +34,7 @@ namespace EMRSystem.Controllers
         public ActionResult Action(int ID = 0)
         {
             HospitalRecordActionViewModel model = new HospitalRecordActionViewModel();
-            if(model.ID != 0)
+            if(ID != 0)
             {
                 var hospitalrecord = HospitalRecordServices.Instance.GetHospitalRecord(ID);
                 model.ID = hospitalrecord.ID;

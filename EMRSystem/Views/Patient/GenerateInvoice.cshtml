@@ -34,6 +34,7 @@
                     <div class="form-group col-md-4">
                         <label>Suggest Medicine</label>
                         <input type="text" class="form-control" name="SuggestMedicine" />
+                        <input type="hidden" value="@Model.PatientFull.Name" name="Patient" />
                     </div>
                     <div class="form-group col-md-4">
                         <label>Add Attachment (if Any)</label>
@@ -44,10 +45,11 @@
                         <label>Remarks </label>
                         <input type="text" class="form-control" name="Remarks" />
                     </div>
+                    <input type="hidden" name="Hospital" value="@Model.HospitalFull.Name" />
                 </div>
 
             </form>
-            <button id="GenerateInvoiceBtn" class="btn btn-block btn-ouline-dark">GENERATE INVOICE</button>
+            <button id="GenerateInvoiceBtn" class="btn btn-block btn-outline-dark">GENERATE INVOICE</button>
         </div>
 
     </div>
@@ -89,8 +91,23 @@
     });
 
 
+    function CheckDisease() {
+        var disease = $("#Disease").val();
+            var url = '@Url.Action("GetDoctors", "Patient")'; // Replace "YourController" with the actual name of your controller
 
+            // Make an AJAX request to fetch the doctors based on the selected disease
+            $.getJSON(url, { disease: disease }, function (data) {
+                var doctorsDropdown = $('#Doctor');
+                doctorsDropdown.empty(); // Clear the existing options
+
+                // Populate the doctors dropdown with the fetched data
+                $.each(data, function (index, item) {
+                    doctorsDropdown.append($('<option></option>').val(item).text(item));
+                });
+            });
+    }
     $(document).ready(function () {
+        CheckDisease();
         $('#Disease').change(function () {
             var disease = $(this).val();
             var url = '@Url.Action("GetDoctors", "Patient")'; // Replace "YourController" with the actual name of your controller
@@ -117,7 +134,7 @@
         })
             .done(function (response) {
                 if (response.success) {
-                    var invoiceUrl = '@Url.Action("GenerateInvoice", "Patient")';
+                    var invoiceUrl = '@Url.Action("ViewInvoice", "Patient")';
                     var formData = $("#ActionForm").serialize();
 
                     // Append the serialized form data as query parameters to the invoice URL

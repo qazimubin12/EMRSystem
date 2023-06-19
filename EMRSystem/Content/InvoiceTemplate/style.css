@@ -12,7 +12,7 @@ a {
 body {
   position: relative;
   width: 21cm;  
-  height: 29.7cm; 
+  height: auto; 
   margin: 0 auto; 
   color: #001028;
   background: #FFFFFF; 
@@ -101,7 +101,7 @@ table .desc {
 
 table td {
   padding: 20px;
-  text-align: right;
+  text-align: center;
 }
 
 table td.service,

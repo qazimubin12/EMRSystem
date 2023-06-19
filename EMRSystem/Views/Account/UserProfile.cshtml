@@ -8,32 +8,205 @@
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">@Model.Name</span></div>
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img id="HospitalLogo" class="rounded-circle mt-5" width="150px" src="@Model.Image"><span class="font-weight-bold">@Model.Name</span></div>
         </div>
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Profile Settings</h4>
                 </div>
-                @using (Html.BeginForm("UserProfile", "Account", FormMethod.Post))
-                {
-                <div class="row mt-2">
-                    <input type="hidden" class="form-control" name="ID" placeholder="Full Name" value="@Model.ID">
-                    <div class="col-md-6"><label class="labels">Full Name</label><input type="text" name="Name" class="form-control" placeholder="Full Name" value="@Model.Name"></div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Contact</label><input type="text" name="Contact" class="form-control" placeholder="enter phone number" value="@Model.Contact"></div>
-                    <div class="col-md-12"><label class="labels">Email</label><input type="email" name="Email" class="form-control" placeholder="Enter Email" value="@Model.Email"></div>
-                    <div class="col-md-12"><label class="labels">UserName</label><input type="text" name="UserName" class="form-control" placeholder="Enter UserName" value="@Model.UserName"></div>
+                <form id="ActionForm">
 
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">Password</label><input name="Password" type="password" class="form-control" placeholder="Password" value="@Model.Password"></div>
-                </div>
-                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Update Profile</button></div>
-                }
+                    <div class="row mt-2">
+                        <input type="hidden" class="form-control" name="ID" placeholder="Full Name" value="@Model.ID">
+                        <div class="col-md-6"><label class="labels">Full Name</label><input type="text" name="Name" class="form-control" placeholder="Full Name" value="@Model.Name"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Contact</label><input type="text" name="Contact" class="form-control" placeholder="enter phone number" value="@Model.Contact"></div>
+                        <div class="col-md-12"><label class="labels">Email</label><input type="email" name="Email" class="form-control" placeholder="Enter Email" value="@Model.Email"></div>
+                        <div class="col-md-12"><label class="labels">UserName</label><input type="text" name="UserName" class="form-control" placeholder="Enter UserName" value="@Model.UserName"></div>
+
+                    </div>
+                    @if (User.IsInRole("Hospital"))
+                    {
+                        <div class="form-group">
+                            <label>City</label>
+                            <input class="form-control" value="@Model.City" name="City" placeholder="Enter City.">
+                        </div>
+                        <div class="form-group">
+                            <label>Registered No</label>
+                            <input class="form-control" value="@Model.RegisteredNo" name="RegisteredNo" placeholder="Enter City.">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Upload Logo</label>
+                            <input class="form-control" name="Image" id="Image" type="hidden" />
+                            <input class="form-control" id="ImageUpload" name="ImageUpload" type="file" />
+                        </div>
+                    } 
+                    @if (User.IsInRole("Patient"))
+                    {
+                        <div class="form-group">
+                            <label>CNIC</label>
+                            <input class="form-control" value="@Model.CNIC" id="CNIC" name="CNIC" placeholder="Enter CNIC.">
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            
+                            <select class="form-control" name="Gender">
+                                @if (Model.Gender == "Male")
+                                {
+                                    <option selected value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Not Prefer to Say">Not Prefer to Say</option>
+                                }
+                                else if (Model.Gender == "Female")
+                                {
+                                    <option value="Male">Male</option>
+                                    <option selected value="Female">Female</option>
+                                    <option value="Not Prefer to Say">Not Prefer to Say</option>
+                                }
+                                else if (Model.Gender == "Not Prefer to Say")
+                                {
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option selected value="Not Prefer to Say">Not Prefer to Say</option>
+                                }
+                                else
+                                {
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Not Prefer to Say">Not Prefer to Say</option>
+                                }
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            @Html.TextBox("DOB", Model.DOB, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "DOB", @class = "form-control", type = "date" })
+                        </div>
+                    }
+
+
+
+                    <div class="row mt-3">
+                        <div class="col-md-6"><label class="labels">Password</label><input name="Password" type="password" class="form-control" placeholder="Password" value="@Model.Password"></div>
+                    </div>
+                    
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" id="SubmitBtn" type="button">Update Profile</button></div>
+                </form>
             </div>
         </div>
-        
+
     </div>
 </div>
+
+
+@if (User.IsInRole("Patient"))
+{
+    <script>
+    $(document).ready(function () {
+
+        $("#CNIC").on("change", function () {
+            var cnic = $(this).val();
+            if (cnic.length === 13) {
+                $("#SubmitBtn").show()
+                $("#Status").text("");
+
+            } else {
+                $("#SubmitBtn").hide()
+                $("#Status").text("Write 13 Digits CNIC");
+            }
+        });
+    })
+
+    $("#SubmitBtn").click(function () {
+        var cnic = $("#CNIC").val();
+        $.ajax({
+            url: '@Url.Action("CheckCNIC", "Admin")',
+            type: "POST",
+            data: { CNIC: cnic },
+            success: function (response) {
+
+
+                if (response.isCNICExists) {
+                    $("#Status").text("CNIC Already Exists");
+                    return;
+
+                } else {
+                    $("#submitButton").prop("disabled", true);
+
+                    $.ajax({
+                        url: '@Url.Action("UserProfile", "Account")',
+                        type: "post",
+                        data: $("#ActionForm").serialize()
+                    })
+                        .done(function (response) {
+
+                            window.location.href = '@Url.Action("", "")';
+
+                        });
+
+                }
+            }
+        });
+
+
+	});
+    </script>
+}
+
+<script>
+    $("#ImageUpload").change(function () {
+
+        var element = this;
+        var formData = new FormData();
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Image", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadAttachment", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                if (response.Success) {
+                    $("#Image").val(response.DocURL);
+                    $("#HospitalLogo").src(response.DocURL);
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
+
+
+    $("#SubmitBtn").click(function () {
+        $.ajax({
+            url: '@Url.Action("UserProfile", "Account")',
+            type: "post",
+            data: $("#ActionForm").serialize()
+        })
+            .done(function (response) {
+
+                window.location.href = '@Url.Action("", "")';
+
+            });
+
+    })
+
+
+
+
+
+
+</script>

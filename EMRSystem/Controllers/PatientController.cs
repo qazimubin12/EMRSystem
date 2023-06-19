@@ -1,4 +1,5 @@
-﻿using EMRSystem.Services;
+﻿using EMRSystem.Entities;
+using EMRSystem.Services;
 using EMRSystem.ViewModels;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
@@ -90,6 +91,12 @@ namespace EMRSystem.Controllers
         }
 
 
+        public User SearchUsers(string PatientName)
+        {
+            var users = UserManager.Users.AsQueryable();
+            return users.Where(x=>x.Name == PatientName).FirstOrDefault();
+        }
+
         public ActionResult Dashboard()
         {
             PatientActionViewModel model = new PatientActionViewModel();
@@ -100,24 +107,67 @@ namespace EMRSystem.Controllers
 
 
         [HttpGet]
-        public ActionResult Invoice(string ID)
+        public ActionResult GenerateInvoice(string ID)
         {
             InvoiceActionViewModel model = new InvoiceActionViewModel();
             var user = UserManager.FindById(ID);
             model.PatientFull = user;
-            model.Doctors = HospitalRecordServices.Instance.GetRentHospitalRecords().Where(x => x.HopistalID == User.Identity.GetUserId()).Select(X=>X.Doctor).ToList();
+            model.HospitalFull = UserManager.FindById(User.Identity.GetUserId());
+            model.Diseases = HospitalRecordServices.Instance.GetRentHospitalRecords().Where(x => x.HopistalID == User.Identity.GetUserId()).Select(X => X.Disease).Distinct().ToList();
+            model.Doctors = HospitalRecordServices.Instance.GetRentHospitalRecords().Where(x => x.HopistalID == User.Identity.GetUserId()).Select(X=>X.Doctor).Distinct().ToList();
             return View(model);
         }
+
 
         [HttpPost]
-        public ActionResult Invoice(InvoiceActionViewModel model)
+        public ActionResult GenerateInvoice(InvoiceActionViewModel model)
         {
+            var newInvoice = new Invoice();
+            newInvoice.Attachment = model.Attachment;
+            newInvoice.Patient = model.Patient;
+            newInvoice.Doctor = model.Doctor;
+            newInvoice.Hospital = model.Hospital;
+            newInvoice.Disease = model.Disease;
+           newInvoice.SuggestMedicine = model.SuggestMedicine;
+            newInvoice.Remarks = model.Remarks;
+            newInvoice.InvoiceNo = "INV" + DateTime.Now.ToString("ddmmhhmmss");
+            newInvoice.InvoiceDate = DateTime.Now;
+            InvoiceServices.Instance.SaveInvoice(newInvoice);
+            return Json(new { success = true });
 
+        }
+
+
+        [HttpGet]
+        public ActionResult ViewInvoice(InvoiceActionViewModel model)
+        {
+            model.PatientFull = SearchUsers(model.Patient);
+            model.HospitalFull = UserManager.FindById(User.Identity.GetUserId());
+            var LastSavedInvoice = InvoiceServices.Instance.GetPatientInvoices().OrderByDescending(X=>X.ID).FirstOrDefault();
+            model.InvoiceNo = LastSavedInvoice.InvoiceNo;
+            model.InvoiceDate = LastSavedInvoice.InvoiceDate;
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult ViewInvoiceNew(int ID)
+        {
+            InvoiceActionViewModel model = new InvoiceActionViewModel();
+            var Invoice = InvoiceServices.Instance.GetInvoice(ID);
+            model.InvoiceNo = Invoice.InvoiceNo;
+            model.InvoiceDate = Invoice.InvoiceDate;
+            model.Disease = Invoice.Disease;
+            model.Doctor = Invoice.Doctor;
+            model.SuggestMedicine = Invoice.SuggestMedicine;
+            model.Remarks = Invoice.Remarks;
+          
+            model.HospitalFull = SearchUsers(Invoice.Hospital);
+            model.PatientFull = SearchUsers(Invoice.Patient);
+            return View("ViewInvoice",model);
         }
 
 
 
-       
+
     }
 }
