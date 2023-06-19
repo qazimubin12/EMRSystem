@@ -10,7 +10,7 @@ namespace EMRSystem.Controllers
     public class SharedController : Controller
     {
         // GET: Shared
-        public JsonResult UploadImage()
+        public JsonResult UploadAttachment()
         {
             JsonResult result = new JsonResult();
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -20,9 +20,9 @@ namespace EMRSystem.Controllers
 
                 var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
 
-                var path = Path.Combine(Server.MapPath("~/PdfFiles/"), fileName);
+                var path = Path.Combine(Server.MapPath("~/Attachments/"), fileName);
                 file.SaveAs(path);
-                result.Data = new { Success = true, DocURL = string.Format("/PdfFiles/{0}", fileName) };
+                result.Data = new { Success = true, DocURL = string.Format("/Attachments/{0}", fileName) };
             }
             catch (Exception ex)
             {
@@ -34,27 +34,6 @@ namespace EMRSystem.Controllers
 
 
 
-        public JsonResult ArticleUploadImage()
-        {
-            JsonResult result = new JsonResult();
-            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            try
-            {
-                var file = Request.Files[0];
-
-                var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
-
-                var path = Path.Combine(Server.MapPath("~/Content/template/images/"), fileName);
-                file.SaveAs(path);
-                result.Data = new { Success = true, ImageURL = string.Format("/Content/template/images/{0}", fileName) };
-            }
-            catch (Exception ex)
-            {
-                result.Data = new { Success = false, Message = ex.Message };
-                throw;
-            }
-            return result;
-        }
 
     }
 }

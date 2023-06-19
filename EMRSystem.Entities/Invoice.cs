@@ -8,6 +8,7 @@ namespace EMRSystem.Entities
 {
     public class Invoice:BaseEntity
     {
+        public string InvoiceNo { get; set; }
         public string Hospital { get; set; }
         public string Patient { get; set; }
         public string Doctor { get; set; }

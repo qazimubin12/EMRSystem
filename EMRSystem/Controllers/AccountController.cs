@@ -206,7 +206,7 @@ namespace EMRSystem.Controllers
 
                 if (role.Name == "Hospital")
                 {
-                    var user = new User { UserName = model.Email, Email = model.Email, PhoneNumber = model.Contact, Name = model.Name, City = model.City, RegisteredNo = model.RegisteredNo, Role = role.Name, Password = model.Password,DOB=DateTime.Now };
+                    var user = new User {Image= model.Image, UserName = model.Email, Email = model.Email, PhoneNumber = model.Contact, Name = model.Name, City = model.City, RegisteredNo = model.RegisteredNo, Role = role.Name, Password = model.Password,DOB=DateTime.Now };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {

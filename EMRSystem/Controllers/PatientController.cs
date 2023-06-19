@@ -80,6 +80,16 @@ namespace EMRSystem.Controllers
             return View(model);
         }
 
+        public ActionResult GetDoctors(string disease)
+        {
+            // Retrieve the list of doctors based on the selected disease
+            var doctors = HospitalRecordServices.Instance.GetDoctorsUsingDisease(disease);
+
+            // Return the list of doctors as JSON
+            return Json(doctors, JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult Dashboard()
         {
             PatientActionViewModel model = new PatientActionViewModel();
@@ -92,8 +102,21 @@ namespace EMRSystem.Controllers
         [HttpGet]
         public ActionResult Invoice(string ID)
         {
-            return View();
+            InvoiceActionViewModel model = new InvoiceActionViewModel();
+            var user = UserManager.FindById(ID);
+            model.PatientFull = user;
+            model.Doctors = HospitalRecordServices.Instance.GetRentHospitalRecords().Where(x => x.HopistalID == User.Identity.GetUserId()).Select(X=>X.Doctor).ToList();
+            return View(model);
         }
+
+        [HttpPost]
+        public ActionResult Invoice(InvoiceActionViewModel model)
+        {
+
+            return View(model);
+        }
+
+
 
        
     }

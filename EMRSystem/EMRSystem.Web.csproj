@@ -200,6 +200,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\InvoiceTemplate\dimension.png" />
+    <Content Include="Content\InvoiceTemplate\index.html" />
+    <Content Include="Content\InvoiceTemplate\logo.png" />
+    <Content Include="Content\InvoiceTemplate\style.css" />
     <Content Include="Content\template\css\jquery-ui.css" />
     <Content Include="Content\template\css\vertical-layout-light\style.css" />
     <Content Include="Content\template\gulpfile.js" />

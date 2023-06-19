@@ -48,6 +48,16 @@ namespace EMRSystem.Services
             }
         }
 
+        public List<string> GetDoctorsUsingDisease(string Disease)
+        {
+            using (var context = new DSContext())
+            {
+               
+                    return context.HospitalRecords.Where(X=>X.Disease == Disease).Select(X=>X.Doctor).ToList();
+                
+            }
+        }
+
 
 
 

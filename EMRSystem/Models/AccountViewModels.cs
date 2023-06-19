@@ -120,6 +120,7 @@ namespace EMRSystem.Models
 
         [Display(Name = "Age")]
         public int Age { get;  set; }
+        public string Image { get;  set; }
     }
 
     public class ResetPasswordViewModel

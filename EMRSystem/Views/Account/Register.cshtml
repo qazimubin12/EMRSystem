@@ -80,33 +80,39 @@
                                 </div>
                                 @if (Session["Type"].ToString() == "Hospital")
                                 {
-                                <div class="form-group">
-                                    <label>City</label>
-                                    <input class="form-control" name="City" placeholder="Enter City.">
-                                </div>
-                                <div class="form-group">
-                                    <label>Registered No</label>
-                                    <input class="form-control" name="RegisteredNo" placeholder="Enter City.">
-                                </div>
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <input class="form-control" name="City" placeholder="Enter City.">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Registered No</label>
+                                        <input class="form-control" name="RegisteredNo" placeholder="Enter City.">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Upload Logo</label>
+                                        <input class="form-control" name="Image" id="Image" type="hidden" />
+                                        <input class="form-control" id="ImageUpload" name="ImageUpload" type="file" />
+                                    </div>
                                 }
                                 @if (Session["Type"].ToString() == "Patient")
                                 {
-                                <div class="form-group">
-                                    <label>CNIC</label>
-                                    <input class="form-control" id="CNIC" name="CNIC" placeholder="Enter CNIC.">
-                                </div>
-                                <div class="form-group">
-                                    <label>Gender</label>
-                                    <select class="form-control" name="Gender">
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Not Prefer to Say">Not Prefer to Say</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Date of Birth</label>
-                                    @Html.TextBox("DOB", DateTime.Now, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "DOB", @class = "form-control", type = "date" })
-                                </div>
+                                    <div class="form-group">
+                                        <label>CNIC</label>
+                                        <input class="form-control" id="CNIC" name="CNIC" placeholder="Enter CNIC.">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Gender</label>
+                                        <select class="form-control" name="Gender">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Not Prefer to Say">Not Prefer to Say</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Date of Birth</label>
+                                        @Html.TextBox("DOB", DateTime.Now, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "DOB", @class = "form-control", type = "date" })
+                                    </div>
                                 }
 
 
@@ -218,6 +224,38 @@
 }
 
 <script>
+    $("#ImageUpload").change(function () {
+
+        var element = this;
+        var formData = new FormData();
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Image", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadAttachment", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                if (response.Success) {
+                    $("#Image").val(response.DocURL);
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
+
+
     $("#SubmitBtn").click(function () {
         $.ajax({
             url: '@Url.Action("Register", "Account")',

@@ -22,4 +22,18 @@ namespace EMRSystem.ViewModels
         public List<Invoice> PatientInvoices { get; set; }
         public User SignedInUser { get; set; }
     }
+
+
+    public class InvoiceActionViewModel
+    {
+        public List<string> Doctors { get; set; }
+        public List<string> Diseases { get; set; }
+        public User PatientFull { get; set; }
+        public string Hospital { get; set; }
+        public string Patient { get; set; }
+        public string Doctor { get; set; }
+        public string SuggestMedicine { get; set; }
+        public string Attachment { get; set; }
+        public string Remarks { get; set; }
+    }
 }
