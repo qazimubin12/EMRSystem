@@ -231,7 +231,7 @@ namespace EMRSystem.Controllers
                 }
                 else
                 {
-                    var user = new User {Age=model.Age, UserName = model.Email, Email = model.Email, PhoneNumber = model.Contact, Name = model.Name, Role = role.Name, Password = model.Password };
+                    var user = new User {Age=model.Age, UserName = model.Email, Email = model.Email, PhoneNumber = model.Contact, Name = model.Name, Role = role.Name, Password = model.Password,DOB=DateTime.Now };
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {

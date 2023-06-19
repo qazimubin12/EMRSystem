@@ -1,5 +1,6 @@
 ﻿using EMRSystem.Services;
 using EMRSystem.ViewModels;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -77,6 +78,21 @@ namespace EMRSystem.Controllers
             model.Contact = user.PhoneNumber;
             model.Email = user.Email;
             return View(model);
+        }
+
+        public ActionResult Dashboard()
+        {
+            PatientActionViewModel model = new PatientActionViewModel();
+            model.SignedInUser = UserManager.FindById(User.Identity.GetUserId());
+            model.PatientInvoices = InvoiceServices.Instance.GetPatientInvoices().Where(x=>x.Patient == model.SignedInUser.Name).ToList();  
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public ActionResult Invoice(string ID)
+        {
+            return View();
         }
 
        

@@ -15,8 +15,17 @@ namespace EMRSystem.Controllers
         // GET: HospitalRecord
         public ActionResult Index(string SearchTerm = "")
         {
+
             HospitalRecordListingViewModel model = new HospitalRecordListingViewModel();
-            model.HospitalRecords = HospitalRecordServices.Instance.GetRentHospitalRecords(SearchTerm);
+            if (User.IsInRole("Admin"))
+            {
+                model.HospitalRecords = HospitalRecordServices.Instance.GetRentHospitalRecords(SearchTerm);
+            }
+            else
+            {
+                model.HospitalRecords = HospitalRecordServices.Instance.GetRentHospitalRecords(SearchTerm).Where(x=>x.HopistalID == User.Identity.GetUserId()).ToList();
+
+            }
             model.SearchTerm = SearchTerm;
             return View(model);
         }
@@ -53,7 +62,7 @@ namespace EMRSystem.Controllers
                 hospitalrecord.Doctor = model.Doctor;
                 hospitalrecord.Disease = model.Disease;
                 hospitalrecord.HopistalID = User.Identity.GetUserId();
-                HospitalRecordServices.Instance.UpdateHospitalRecord(hospitalrecord);
+                HospitalRecordServices.Instance.SaveHospitalRecord(hospitalrecord);
             }
             return Json(new {success=true},JsonRequestBehavior.AllowGet);   
         }

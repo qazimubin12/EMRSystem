@@ -1251,6 +1251,11 @@
     <Content Include="Views\Hospital\Dashboard.cshtml" />
     <Content Include="Views\Patient\View.cshtml" />
     <Content Include="Views\HospitalRecord\Index.cshtml" />
+    <Content Include="Views\HospitalRecord\Action.cshtml" />
+    <Content Include="Views\HospitalRecord\_Delete.cshtml" />
+    <Content Include="Views\HospitalRecord\_Listing.cshtml" />
+    <Content Include="Views\Patient\Dashboard.cshtml" />
+    <Content Include="Views\Patient\GenerateInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

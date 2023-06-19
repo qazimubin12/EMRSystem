@@ -1,0 +1,97 @@
+﻿@model EMRSystem.ViewModels.PatientActionViewModel
+@{ ViewBag.Title = "Dashboard";
+}
+
+<style>
+    .scroll {
+        overflow-x: scroll;
+        width: contain;
+    }
+
+    td {
+        width: 200px;
+    }
+</style>
+<h2>Dashboard - Welcome @Model.SignedInUser.Name</h2>
+<hr />
+
+
+
+<div class="row mb-3">
+    <div class="col col-lg-12">
+
+        <br />
+        @if (Model.PatientInvoices != null)
+        {
+            <div class="card">
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    Patient
+                                </th>
+                                <th>
+                                    Hospital
+                                </th>
+                                <th>
+                                    Doctor
+                                </th>
+                                <th>
+                                    Suggest Medicine
+                                </th>
+                                <th>
+                                    Remarks
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PatientInvoices)
+                            {
+                                <tr>
+                                    <td>@item.Patient</td>
+                                    <td>@item.Hospital</td>
+                                    <td>@item.Doctor</td>
+                                    <td>@item.SuggestMedicine</td>
+                                    <td>@item.Remarks</td>
+                                    <td><embed src="@item.Attachment" /></td>
+                                </tr>
+}
+                        </tbody>
+                    </table>
+                </div>
+            </div> }
+        else
+        {
+
+            <div class="alert alert-warning col-md-12" role="alert">
+                Sorry! No records exist.
+            </div>      }
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    </div>
+</div>
+
+<script>
+    $(".data-btn").click(function () {
+        $.ajax({
+            url: $(this).attr("data-href"),
+        })
+            .done(function (response) {
+                $("#actionModal .modal-dialog").html(response);
+            });
+    });
+
+</script>

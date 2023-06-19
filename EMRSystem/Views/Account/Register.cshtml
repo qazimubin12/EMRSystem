@@ -162,7 +162,8 @@
 <script src="~/Content/template/js/settings.js"></script>
 <script src="~/Content/template/js/todolist.js"></script>
 
-
+@if (Session["Type"].ToString() == "Patient")
+{
 <script>
     $(document).ready(function () {
         $("#SubmitBtn").hide();
@@ -203,7 +204,7 @@
                     })
                         .done(function (response) {
 
-                            window.location.href = '@Url.Action("","")';
+                            window.location.href = '@Url.Action("", "")';
 
                         });
 
@@ -213,4 +214,27 @@
 
 
 	});
+</script>
+}
+
+<script>
+    $("#SubmitBtn").click(function () {
+        $.ajax({
+            url: '@Url.Action("Register", "Account")',
+            type: "post",
+            data: $("#ActionForm").serialize()
+        })
+            .done(function (response) {
+
+                window.location.href = '@Url.Action("", "")';
+
+            });
+
+    })
+
+
+
+
+
+
 </script>

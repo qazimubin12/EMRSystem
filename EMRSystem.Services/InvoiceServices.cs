@@ -30,7 +30,7 @@ namespace EMRSystem.Services
 
 
 
-        public List<Invoice> GetRentInvoices(string SearchTerm = "")
+        public List<Invoice> GetPatientInvoices(string SearchTerm = "")
         {
             using (var context = new DSContext())
             {

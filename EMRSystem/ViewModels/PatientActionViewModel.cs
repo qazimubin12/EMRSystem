@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EMRSystem.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,5 +19,7 @@ namespace EMRSystem.ViewModels
         public string Gender { get; set; }
         public int Age { get; set; }
         public string Contact { get; set; }
+        public List<Invoice> PatientInvoices { get; set; }
+        public User SignedInUser { get; set; }
     }
 }

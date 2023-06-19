@@ -156,6 +156,13 @@
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "HospitalRecord")">
+                                <i class="mdi mdi-account-settings menu-icon"></i>
+                                <span class="menu-title">Hospital Records</span>
+                            </a>
+                        </li>
+
 
 
 
@@ -168,7 +175,16 @@
                     }
 
 
+                    else if (User.IsInRole("Hospital"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "HospitalRecord")">
+                                <i class="mdi mdi-account-settings menu-icon"></i>
+                                <span class="menu-title">Hospital Records</span>
+                            </a>
+                        </li>
 
+                    }
 
 
 
@@ -213,11 +229,11 @@
 
 
 
-    <script src="~/Content/template/js/dashboard.js"></script>
+    @*<script src="~/Content/template/js/dashboard.js"></script>*@
 
 
     <!-- base:js -->
-    <script src="~/Content/template/vendors/js/vendor.bundle.base.js"></script>
+    @*<script src="~/Content/template/vendors/js/vendor.bundle.base.js"></script>*@
     <!-- endinject -->
     <!-- Plugin js for this page-->
     <script src="~/Content/template/vendors/chart.js/Chart.min.js"></script>
