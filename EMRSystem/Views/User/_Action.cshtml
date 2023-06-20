@@ -11,7 +11,7 @@
                 }
                 else
                 {
-            <span>Create User</span>
+                    <span>Create User</span>
                 }
             </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -19,42 +19,109 @@
             </button>
         </div>
         <div class="modal-body">
-            <form id="actionForm">
+            <form id="ActionForm">
                 <input type="hidden" name="ID" value="@Model.ID" />
                 <div class="form-group">
-                    <label>Full Name</label>
-                    <input class="form-control" name="Name" placeholder="Enter Full Name." value="@Model.Name">
-                </div>
-                <div class="form-group">
                     <label>Email</label>
-                    <input class="form-control" name="Email" placeholder="Enter Email." value="@Model.Email">
+                    <input type="email" value="@Model.Email" name="Email" class="form-control" placeholder="Enter Email" />
+
                 </div>
 
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Role</label>
-                        <div class="col-sm-9">
-                            <select name="Role" class="form-control">
-                                @foreach (var item in Model.Roles)
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input class="form-control" value="@Model.Name" name="Name" placeholder="Enter Full Name.">
+                </div>
+
+                <div class="form-group ">
+                    <label>Role</label>
+                    <select name="RoleID" class="form-control">
+
+                        @foreach (var item in Model.Roles)
+                        {
+                            if (item.Name.ToString() != "Admin")
+                            {
+                                if (Session["Type"].ToString() == item.Name)
                                 {
-                                    <option value="@item.Name">@item.Name</option>
+                                    <option selected value="@item.Id">@item.Name</option>
                                 }
 
+                            }
+                        }
 
-                            </select>
-                        </div>
+
+                    </select>
+                </div>
+                @if (Session["Type"].ToString() == "Hospital")
+                {
+                    <div class="form-group">
+                        <label>City</label>
+                        <input class="form-control" value="@Model.City" name="City" placeholder="Enter City.">
                     </div>
+                    <div class="form-group">
+                        <label>Registered No</label>
+                        <input class="form-control" value="@Model.RegisteredNo" name="RegisteredNo" placeholder="Enter City.">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Logo</label>
+                        <input class="form-control" value="@Model.Image" name="Image" id="Image" type="hidden" />
+                        <input class="form-control" id="ImageUpload" name="ImageUpload" type="file" />
+                    </div>
+                }
+                @if (Session["Type"].ToString() == "Patient")
+                {
+                    <div class="form-group">
+                        <label>CNIC</label>
+                        <input class="form-control" value="@Model.CNIC" id="CNIC" name="CNIC" placeholder="Enter CNIC.">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select class="form-control" name="Gender">
+                            @if (Model.Gender == "Male")
+                            {
+                                <option selected value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Not Prefer to Say">Not Prefer to Say</option>
+                            }
+                            else if (Model.Gender == "Female")
+                            {
+                                <option value="Male">Male</option>
+                                <option selected value="Female">Female</option>
+                                <option value="Not Prefer to Say">Not Prefer to Say</option>
+                            }
+                            else if (Model.Gender == "Not Prefer to Say")
+                            {
+
+
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option selected value="Not Prefer to Say">Not Prefer to Say</option>
+                            }
+                            else
+                            {
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Not Prefer to Say">Not Prefer to Say</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        @Html.TextBox("DOB", Model.DOB, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "DOB", @class = "form-control", type = "date" })
+                    </div>
+                }
+
 
                 <div class="form-group">
                     <label>Contact</label>
-                    <input class="form-control" name="Contact" placeholder="Enter Contact." value="@Model.Contact">
-                </div>
-
-                <div class="form-group">
+                    <input class="form-control" value="@Model.Contact" name="Contact" placeholder="Enter Contact.">
+                </div><div class="form-group">
                     <label>Password</label>
-                    <input class="form-control" name="Password" type="password" placeholder="Enter Password." value="@Model.Password">
-                </div>
-
-
+                    <input class="form-control" value="@Model.Password" name="Password" type="password" placeholder="Enter Password.">
+                </div><div class="form-group">
+                    <label>Confirm Password</label>
+                    <input class="form-control" value="@Model.Password" name="ConfirmPassword" type="password" placeholder="Enter Password.">
+                </div><hr />
             </form>
 
             <div class="errorDiv">
@@ -64,32 +131,122 @@
         <div class="modal-footer">
             @if (!string.IsNullOrEmpty(Model.ID))
             {
-                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Update</button>
+                <button id="SubmitBtn" type="button"class="btn btn-primary"><i class="fas fa-save mr-1"></i> Update</button>
             }
             else
             {
-                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+                <button id="SubmitBtn" type="button"  class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
             }
             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</button>
         </div>
     </div>
 }
 
-<script>
-	$("#actionButton").click(function () {
-		$.ajax({
-			url: '@Url.Action("Action", "User")',
-			type: "post",
-			data: $("#actionForm").serialize()
-		})
-		.done(function (response) {
-			if(response.Success)
-			{
-				location.reload();
-			}
-			else {
-				$(".errorDiv").html(response.Message);
-			}
-		});
+@if (Session["Type"].ToString() == "Patient")
+{
+    <script>
+    $(document).ready(function () {
+        $("#SubmitBtn").hide();
+
+        $("#CNIC").on("change", function () {
+            var cnic = $(this).val();
+            if (cnic.length === 13) {
+                $("#SubmitBtn").show()
+                $("#Status").text("");
+
+            } else {
+                $("#SubmitBtn").hide()
+                $("#Status").text("Write 13 Digits CNIC");
+            }
+        });
+    })
+
+    $("#SubmitBtn").click(function () {
+        var cnic = $("#CNIC").val();
+        $.ajax({
+            url: '@Url.Action("CheckCNIC", "Admin")',
+            type: "POST",
+            data: { CNIC: cnic },
+            success: function (response) {
+
+
+                if (response.isCNICExists) {
+                    $("#Status").text("CNIC Already Exists");
+                    return;
+
+                } else {
+                    $("#submitButton").prop("disabled", true);
+
+                    $.ajax({
+                        url: '@Url.Action("Register", "Account")',
+                        type: "post",
+                        data: $("#ActionForm").serialize()
+                    })
+                        .done(function (response) {
+
+                            window.location.href = '@Url.Action("", "")';
+
+                        });
+
+                }
+            }
+        });
+
+
 	});
+    </script>
+}
+
+<script>
+    $("#ImageUpload").change(function () {
+
+        var element = this;
+        var formData = new FormData();
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Image", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadAttachment", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                if (response.Success) {
+                    $("#Image").val(response.DocURL);
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
+
+
+    $("#SubmitBtn").click(function () {
+        $.ajax({
+            url: '@Url.Action("Register", "Account")',
+            type: "post",
+            data: $("#ActionForm").serialize()
+        })
+            .done(function (response) {
+
+                window.location.href = '@Url.Action("", "")';
+
+            });
+
+    })
+
+
+
+
+
+
 </script>

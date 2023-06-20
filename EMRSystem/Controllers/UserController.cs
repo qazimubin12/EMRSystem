@@ -90,7 +90,7 @@ namespace EMRSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Action(string ID)
+        public async Task<ActionResult> Action(string ID,string Type)
         {
             UserActionModel model = new UserActionModel();
             model.Roles = RolesManager.Roles.ToList();
@@ -102,9 +102,17 @@ namespace EMRSystem.Controllers
                 model.Name = user.Name;
                 model.Contact = user.PhoneNumber;
                 model.Email = user.Email;
-
+                model.City = user.City;
+                model.CNIC = user.CNIC;
+                model.Age = user.Age;   
+                model.DOB = user.DOB;
+                model.Gender = user.Gender;
+                model.Image = user.Image;
+                model.RegisteredNo = user.RegisteredNo;
+                model.Image = user.Image;
                 model.Role = user.Role;
                 model.Password = user.Password;
+                Session["Type"] = Type;
             }
             return PartialView("_Action", model);
         }
@@ -125,6 +133,14 @@ namespace EMRSystem.Controllers
                 user.PhoneNumber = model.Contact;
                 user.Email = model.Email;
                 user.Role = model.Role;
+                user.City = model.City;
+                user.CNIC = model.CNIC;
+                user.Age = model.Age;
+                user.DOB = model.DOB;
+                user.Gender = model.Gender;
+                user.Image = model.Image;
+                user.RegisteredNo = model.RegisteredNo;
+                user.Image = model.Image;
                 var token = await UserManager.GeneratePasswordResetTokenAsync(model.ID);
                 var result2 = await UserManager.ResetPasswordAsync(model.ID, token, model.Password);
                 result = await UserManager.UpdateAsync(user);
@@ -138,8 +154,18 @@ namespace EMRSystem.Controllers
                 User.Email = model.Email;
                 User.Password = model.Password;
                 User.Role = model.Role;
+                User.City = model.City;
+                User.CNIC = model.CNIC;
+                User.Age = model.Age;
+                User.DOB = model.DOB;
+                User.Gender = model.Gender;
+                User.Image = model.Image;
+                User.RegisteredNo = model.RegisteredNo;
+                User.Image = model.Image;
                 User.UserName = model.Email;
                 result = await UserManager.CreateAsync(User);
+
+                await UserManager.AddToRoleAsync(User.Id, model.Role);
 
             }
 
