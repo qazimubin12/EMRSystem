@@ -232,7 +232,7 @@
 
     $("#SubmitBtn").click(function () {
         $.ajax({
-            url: '@Url.Action("Register", "Account")',
+            url: '@Url.Action("Action", "User")',
             type: "post",
             data: $("#ActionForm").serialize()
         })

@@ -112,7 +112,7 @@ namespace EMRSystem.Controllers
                 model.Image = user.Image;
                 model.Role = user.Role;
                 model.Password = user.Password;
-                Session["Type"] = Type;
+                Session["Type"] = user.Role;
             }
             return PartialView("_Action", model);
         }
@@ -136,7 +136,15 @@ namespace EMRSystem.Controllers
                 user.City = model.City;
                 user.CNIC = model.CNIC;
                 user.Age = model.Age;
-                user.DOB = model.DOB;
+                if (user.Role == "Patient")
+                {
+                    user.DOB = model.DOB;
+
+                }
+                else
+                {
+                    user.DOB = DateTime.Now;
+                }
                 user.Gender = model.Gender;
                 user.Image = model.Image;
                 user.RegisteredNo = model.RegisteredNo;
@@ -157,7 +165,15 @@ namespace EMRSystem.Controllers
                 User.City = model.City;
                 User.CNIC = model.CNIC;
                 User.Age = model.Age;
-                User.DOB = model.DOB;
+                if (User.Role == "Patient")
+                {
+                    User.DOB = model.DOB;
+
+                }
+                else
+                {
+                    User.DOB = DateTime.Now;
+                }
                 User.Gender = model.Gender;
                 User.Image = model.Image;
                 User.RegisteredNo = model.RegisteredNo;
