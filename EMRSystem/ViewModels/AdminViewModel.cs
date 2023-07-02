@@ -38,6 +38,7 @@ namespace EMRSystem.ViewModels
     {
         public string SearchTerm { get; set; }
 
+        public string Parameter { get; set; }
         public User SignedInUser { get; set; }
         public List<User> Patients { get; set; }
         public List<HospitalRecord> HospitalRecords { get; set; }

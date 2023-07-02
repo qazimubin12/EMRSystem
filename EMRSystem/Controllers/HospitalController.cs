@@ -65,16 +65,41 @@ namespace EMRSystem.Controllers
 
             return View(model);
         }
-
-        public IEnumerable<User> SearchUsers(string searchTerm = "")
+        public IEnumerable<User> SearchUsers()
         {
             var users = UserManager.Users.AsQueryable();
+           
 
-            if (!string.IsNullOrEmpty(searchTerm))
+            return users.OrderByDescending(x => x.Id)
+                .ToList();
+        }
+
+
+        public IEnumerable<User> SearchUsers(string Parameter,string searchTerm = "")
+        {
+            var users = UserManager.Users.AsQueryable();
+            if (Parameter == "Name")
             {
-                users = users.Where(a => a.Email.ToLower().Contains(searchTerm.ToLower()));
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    users = users.Where(a => a.Name.ToLower().Contains(searchTerm.ToLower()));
+                }
             }
-
+            else if(Parameter == "Email")
+            {
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    users = users.Where(a => a.Email.ToLower().Contains(searchTerm.ToLower()));
+                }
+            }
+            else if (Parameter == "CNIC")
+            {
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    users = users.Where(a => a.CNIC.ToLower().Contains(searchTerm.ToLower()));
+                }
+            }
+           
 
 
             return users.OrderByDescending(x => x.Id)
@@ -86,11 +111,11 @@ namespace EMRSystem.Controllers
 
 
         [HttpPost]
-        public ActionResult Dashboard(string SearchTerm)
+        public ActionResult Dashboard(string Parameter,string SearchTerm="")
         {
             HospitalViewModel model = new HospitalViewModel();
             var user = UserManager.FindById(User.Identity.GetUserId());
-            model.Patients = SearchUsers(SearchTerm).Where(x => x.Role == "Patient").OrderByDescending(x => x.Id)
+            model.Patients = SearchUsers(Parameter, SearchTerm).Where(x => x.Role == "Patient").OrderByDescending(x => x.Id)
                 .ToList();
             model.SignedInUser = user;
 

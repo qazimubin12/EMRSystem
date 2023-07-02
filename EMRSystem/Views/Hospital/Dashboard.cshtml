@@ -22,12 +22,40 @@
     <h4>Search Patients</h4>
         <form method="post">
             <div class="input-group">
+                <select class="form-control" name="Parameter" id="Parameter">
+                    @if (Model.Parameter == "Name")
+                    {
+                        <option selected value="Name">Name</option>
+                        <option value="Email">Email</option>
+                        <option value="CNIC">CNIC</option>
+                    }
+                    else if (Model.Parameter == "Email")
+                    {
+                        <option value="Name">Name</option>
+                        <option selected value="Email">Email</option>
+                        <option value="CNIC">CNIC</option>
+                    }
+                    else if (Model.Parameter == "CNIC")
+                    {
 
+
+                        <option value="Name">Name</option>
+                        <option value="Email">Email</option>
+                        <option selected value="CNIC">CNIC</option>
+                    }
+                    else
+                    {
+                        <option value="Name">Name</option>
+                        <option value="Email">Email</option>
+                        <option value="CNIC">CNIC</option>
+                    }
+                </select>
                 <input type="text" name="searchterm" class="form-control" placeholder="Search." value="@Model.SearchTerm">
                 @Html.ValidationSummary("", new { @class = "text-danger" })
 
 
                 <div class="input-group-append">
+
                     <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search mr-1"></i> Search</button>
                     <a class="btn btn-outline-secondary" href="@Url.Action("Dashboard", "Hospital")"><i class="fas fa-redo-alt mr-1"></i> Reset</a>
                 </div>
