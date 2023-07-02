@@ -15,10 +15,11 @@
         <div class="col-md-3 border-right">
 
             <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img id="HospitalLogo" class="rounded-circle mt-5" width="150px" src="@Model.Image"><span class="font-weight-bold">@Model.Name</span></div>
-
+            @if (User.IsInRole("Patient"))
+            {
             <h2>QR CODE</h2>
             <img style="height: 200px;" src="@Url.Action("GenerateQRCode", "Account", new { link = qrCodeUrl })" alt="QR Code" />
-
+            }
         </div>
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
