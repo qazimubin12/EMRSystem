@@ -11,6 +11,81 @@
             </h2>
 
             <form id="ActionForm">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">PATIENT INFO </h2>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Full Name</label>
+                                    <input class="form-control" disabled value="@Model.PatientFull.Name" name="Name" placeholder="Enter Full Name.">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Email</label>
+                                    <input type="email" name="Email" value="@Model.PatientFull.Email" disabled class="form-control" placeholder="Enter Email" />
+
+                                </div>
+
+
+
+
+                                <div class="form-group col-md-4">
+                                    <label>CNIC</label>
+                                    <input class="form-control" disabled value="@Model.PatientFull.CNIC" id="CNIC" name="CNIC" placeholder="Enter CNIC.">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Gender</label>
+                                    <select class="form-control" disabled name="Gender">
+                                        @if (Model.PatientFull.Gender == "Male")
+                                        {
+                                            <option selected value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Not Prefer to Say">Not Prefer to Say</option>
+                                        }
+                                        else if (Model.PatientFull.Gender == "Female")
+                                        {
+                                            <option value="Male">Male</option>
+                                            <option selected value="Female">Female</option>
+                                            <option value="Not Prefer to Say">Not Prefer to Say</option>
+                                        }
+                                        else if (Model.PatientFull.Gender == "Not Prefer to Say")
+                                        {
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option selected value="Not Prefer to Say">Not Prefer to Say</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Not Prefer to Say">Not Prefer to Say</option>
+                                        }
+
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group col-md-4">
+                                    <label>Date of Birth</label>
+                                    @Html.TextBox("DOB", Model.PatientFull.DOB, "{0:yyyy-MM-dd}", new { @style = "width:100%;pointer-events:none;", @id = "DOB", @class = "form-control", type = "date" })
+                                </div>
+
+
+
+                                <div class="form-group col-md-4">
+                                    <label>Contact</label>
+                                    <input class="form-control" value="@Model.PatientFull.PhoneNumber" disabled name="Contact" placeholder="Enter Contact.">
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+             
+                <hr />
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Select Disease</label>

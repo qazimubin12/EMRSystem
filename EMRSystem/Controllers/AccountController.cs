@@ -13,6 +13,9 @@ using EMRSystem.Services;
 using EMRSystem.ViewModels;
 using EMRSystem.Entities;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using QRCoder;
 
 namespace EMRSystem.Controllers
 {
@@ -70,10 +73,38 @@ namespace EMRSystem.Controllers
 
 
 
+
+        [AllowAnonymous]
+        public ActionResult Logins(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return RedirectToAction("", "");
+        }
+
+
+        //
+        // GET: /Account/Login
+        [AllowAnonymous]
+        public ActionResult PatientLogin(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+
+        //
+        // GET: /Account/Login
+        [AllowAnonymous]
+        public ActionResult HospitalLogin(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
@@ -305,12 +336,30 @@ namespace EMRSystem.Controllers
             return View();
         }
 
+
+        public ActionResult GenerateQRCode(string link)
+        {
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(link, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(10);
+
+            MemoryStream ms = new MemoryStream();
+            qrCodeImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            byte[] byteImage = ms.ToArray();
+            return File(byteImage, "image/png");
+        }
+
+
         [Authorize]
         [HttpGet]
         public ActionResult UserProfile()
         {
             AdminViewModel model = new AdminViewModel();
             var user = UserManager.FindById(User.Identity.GetUserId());
+
+
+
             model.Contact = user.PhoneNumber;
             model.Email = user.Email;
             model.ID = user.Id;

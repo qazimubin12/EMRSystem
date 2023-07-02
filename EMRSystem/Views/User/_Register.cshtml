@@ -42,21 +42,34 @@
 
                     @foreach (var item in Model.Roles)
                     {
-                        if (item.Name.ToString() != "Admin")
+                        if (Session["Type"] != null)
                         {
-                            if (Session["Type"].ToString() == item.Name)
+                            if (item.Name.ToString() != "Admin")
                             {
-                                <option selected value="@item.Id">@item.Name</option>
+                                if (Session["Type"].ToString() == item.Name)
+                                {
+                                    <option selected value="@item.Id">@item.Name</option>
+                                }
+
                             }
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.Name</option>
 
                         }
                     }
 
 
+
+
+
                 </select>
             </div>
-            @if (Session["Type"].ToString() == "Hospital")
+            @if (Session["Type"] != null)
             {
+                if (Session["Type"].ToString() == "Hospital")
+                {
                 <div class="form-group">
                     <label>City</label>
                     <input class="form-control" name="City" placeholder="Enter City.">
@@ -71,8 +84,8 @@
                     <input class="form-control" name="Image" id="Image" type="hidden" />
                     <input class="form-control" id="ImageUpload" name="ImageUpload" type="file" />
                 </div>
-            }
-            @if (Session["Type"].ToString() == "Patient")
+                }
+            if (Session["Type"].ToString() == "Patient")
             {
                 <div class="form-group">
                     <label>CNIC</label>
@@ -90,6 +103,7 @@
                     <label>Date of Birth</label>
                     @Html.TextBox("DOB", DateTime.Now, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "DOB", @class = "form-control", type = "date" })
                 </div>
+                }
             }
 
 
@@ -104,20 +118,28 @@
                 <input class="form-control" name="ConfirmPassword" type="password" placeholder="Enter Password.">
             </div><hr /><div class="form-group">
 
-                <div class="col-md-offset-2 col-md-12">
+                            <div class="col-md-offset-2 col-md-12">
 
-                    @if (Session["Type"].ToString() == "Patient")
-                    {
+                                @if (Session["Type"] != null)
+                                {
+                                    if (Session["Type"].ToString() == "Patient")
+                                    {
 
-                        <span id="Status"></span>
-                        <button id="SubmitBtn" type="button" class="btn btn-primary btn-block"> Register</button>
-                    }
-                    else
-                    {
-                        <button id="SubmitBtn" type="button" class="btn btn-primary btn-block"> Register</button>
+                                        <span id="Status"></span>
+                                        <button id="SubmitBtn" type="button" class="btn btn-primary btn-block"> Register</button>
+                                    }
+                                    else
+                                    {
+                                        <button id="SubmitBtn" type="button" class="btn btn-primary btn-block"> Register</button>
 
-                    }
-                </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <button id="SubmitBtn" type="button" class="btn btn-primary btn-block"> Register</button>
+
+                                }
+                            </div>
                 <br />
                 <div class="col-md-offset-2 col-md-12">
                     <a href="@Url.Action("Login","Account")" class="btn btn-primary"> Login</a>
@@ -130,9 +152,10 @@
 
 
 
-
-@if (Session["Type"].ToString() == "Patient")
+@if (Session["Type"] != null)
 {
+    if (Session["Type"].ToString() == "Patient")
+    {
     <script>
     $(document).ready(function () {
         $("#SubmitBtn").hide();
@@ -184,8 +207,8 @@
 
 	});
     </script>
+    }
 }
-
 <script>
     $("#ImageUpload").change(function () {
 
