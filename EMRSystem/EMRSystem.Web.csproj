@@ -183,6 +183,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HospitalController.cs" />
     <Compile Include="Controllers\HospitalRecordController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\HospitalRecordViewModel.cs" />
+    <Compile Include="ViewModels\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\PatientActionViewModel.cs" />
     <Compile Include="ViewModels\RolesViewModel.cs" />
     <Compile Include="ViewModels\UsersViewModel.cs" />
@@ -1269,6 +1271,10 @@
     <Content Include="Views\Account\PatientLogin.cshtml" />
     <Content Include="Views\Account\HospitalLogin.cshtml" />
     <Content Include="Views\Account\Logins.cshtml" />
+    <Content Include="Views\Invoice\_Delete.cshtml" />
+    <Content Include="Views\Invoice\_Listing.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Invoice\ViewInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

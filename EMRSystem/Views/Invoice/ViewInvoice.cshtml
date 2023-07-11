@@ -1,0 +1,71 @@
+﻿@model EMRSystem.ViewModels.HospitalInvoiceActionViewModel
+@{
+    ViewBag.Title = "Invoice";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Invoice - @Model.HospitalFull.Name</title>
+    <link rel="stylesheet" href="~/Content/InvoiceTemplate/style.css" media="all" />
+    
+</head>
+
+<body >
+    <header class="clearfix">
+        <div id="logo">
+            <img src="@Model.HospitalFull.Image">
+        </div>
+        <h1>@Model.HospitalFull.Name</h1>
+        <div id="company" class="clearfix">
+            <div>@Model.HospitalFull.City</div>
+            <div>@Model.HospitalFull.PhoneNumber</div>
+            <div><a href="mailto:@Model.HospitalFull.Email">@Model.HospitalFull.Email</a></div>
+        </div>
+        <div id="project">
+            <div><span>Patient:</span>@Model.PatientFull.Name</div>
+            <div><span>Email</span> @Model.PatientFull.Email</div>
+            <div><span>CNIC</span>@Model.PatientFull.CNIC</div>
+            <div><span>Date of Birth</span>@Model.PatientFull.DOB.ToShortDateString()</div>
+            <div><span>Gender</span>@Model.PatientFull.Gender</div>
+            <div><span>Invoice No</span>@Model.InvoiceNo</div>
+            <div><span>DATE</span> @Model.InvoiceDate.ToShortDateString()</div>
+        </div>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-center">Patient</th>
+                    <th class="text-center">Disease</th>
+                    <th class="text-center">Doctor</th>
+                    <th class="text-center">Medicine Suggestion</th>
+                    <th class="text-center">Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">@Model.PatientFull.Name</td>
+                    <td class="text-center">@Model.Disease</td>
+                    <td class="text-center">@Model.Doctor</td>
+                    <td class="text-center">@Model.SuggestMedicine</td>
+                    <td class="text-center">@Model.Remarks</td>
+                </tr>
+               
+               
+              
+                @*<tr>
+                    <td colspan="4" class="grand total">GRAND TOTAL</td>
+                    <td class="grand total">$6,500.00</td>
+                </tr>*@
+            </tbody>
+        </table>
+       
+    </main>
+    @*<footer>
+        Invoice was created on a computer and is valid without the signature and seal.
+    </footer>*@
+</body>
+</html>
